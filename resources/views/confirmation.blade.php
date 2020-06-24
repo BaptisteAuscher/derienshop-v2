@@ -127,7 +127,7 @@
         </div>
 
         <div class="twitter">
-            <a href="https://twitter.com/intent/tweet?text=Je%20viens%20de%20commander%20un%20bête%20d%27item%20sur%20derienshop.com" class="share"><i></i><span class="label" id="l">SHARE ON TWITTER</span></a>
+            <a href="https://twitter.com/intent/tweet?text=Je%20viens%20de%20commander%20un%20bête%20d%27item%20sur%20derienshop.com%20&hashtags=derien" class="share"><i></i><span class="label" id="l">SHARE ON TWITTER</span></a>
         </div>
 
         <div class="contact">

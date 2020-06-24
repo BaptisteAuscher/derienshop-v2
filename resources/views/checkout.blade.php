@@ -2,8 +2,6 @@
 
 $color = $_POST['color'];
 $size = $_POST['size'];
-$price = $_POST['price'];
-$name = $_POST['name'];
 
 ?>
 
@@ -36,15 +34,13 @@ $name = $_POST['name'];
                     <h3 class="panel-title" style="font-weight: 800">
                         YOUR PRODUCT
                     </h3>
-                    <p class="pl-4">{{$name . ' ' . $color . ', ' . $size}} <i>({{$price . '0€'}})</i><p>
+                    <p class="pl-4">{{$product->name . ' ' . $color . ', ' . $size}} <i>({{$product->price . '0€'}})</i><p>
                 </div>
             </div>
         </div>
-        <form action="/charge" method="post" id="payment-form">
+        <form action="/charge/{{$product->id}}" method="post" id="payment-form">
             <input type="hidden" name="color" value="<?php echo $color ?>">
             <input type="hidden" name="size" value="<?php echo $size ?>">
-            <input type="hidden" name="price" value="<?php echo $price ?>">
-            <input type="hidden" name="productName" value="<?php echo $name ?>">
             <div class="container pt-3">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6 col-sd-12 ">

@@ -18,11 +18,9 @@ Route::view('/', 'home');
 Route::get('/products', 'ProductsController@index');
 Route::get('/products/{product}', 'ProductsController@show');
 
-Route::post('/checkout', function() {
-    return view('checkout');
-});
+Route::post('/checkout/{product}', 'CheckoutController');
 
-Route::post('/charge', 'CommandsController');
+Route::post('/charge/{product}', 'CommandsController');
 
 Route::view('/terms', 'terms.terms');
 

@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Command;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CommandsController extends Controller
 {
-    public function __invoke(){
+    public function __invoke(Product $product){
         request()->validate([
             'size'=>'required|in:SMALL,MEDIUM,LARGE',
-            'color'=>'required',
-            'price'=>'required',
-            'productName'=>'required',
+            'color'=>'required|in:black,white,blue,purple',
             'clientName'=>'required',
             'email'=>'required|email',
             'adress'=>'required',
@@ -34,12 +33,12 @@ class CommandsController extends Controller
         $stripe->charges->create([
             'customer' => $customer->id,
             'currency' => 'eur',
-            'amount' => request('price')*100,
+            'amount' => $product->price*100,
         ]);
 
         $command = Command::create([
             'stripe_id' => $customer->id,
-            'product_name' => request('productName'),
+            'product_name' => $product->name,
             'product_color' => request('color'),
             'product_size' => request('size'),
             'customer_name' => request('clientName'),
@@ -47,7 +46,7 @@ class CommandsController extends Controller
             'customer_adress' => request('adress'),
             'customer_city' => request('city'),
             'customer_zip' => request('zip'),
-            'amount' => request('price'),
+            'amount' => $product->price,
             
         ]);
         

@@ -158,7 +158,7 @@ img{
         <div class="name-container">
             <p class="name">{{ $product->name }} T-SHIRT</p>
         </div>
-        <form action="/checkout" method="post">
+        <form action="/checkout/{{$product->id}}" method="post">
             <div class="row">
                 <div class="col-12 pb-2">€{{$product->price }}0</div>
             </div>
@@ -188,8 +188,6 @@ img{
             </div>
             <div class="row">   
                 <div class="col-12">
-                <input type="hidden" name="price" value="{{$product->price}}">
-                <input type="hidden" name="name" value="{{$product->name}}">
                     <input type="submit" class="btn btn-dark btn-block btn-submit" value="CHECKOUT">
                 </div>
             </div>
