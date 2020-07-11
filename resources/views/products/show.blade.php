@@ -28,6 +28,7 @@ input[type='radio']{
     border: 2px solid black;
     background: #fff;
     font-weight: 800;
+    
 }
 
 .size-select:visited{
@@ -116,12 +117,12 @@ input[type='radio']{
     font-weight: 800;
 }
 
-img{
+.img-tshirt{
     width: 650px;
 }
 
 @media screen and (max-device-width: 479px){
-    img {
+    .img-tshirt {
         width: 300px;
     }
     .description-container{
@@ -142,6 +143,7 @@ img{
 
 @section('shop-content')
 <div class="row">
+    <input type="hidden" value="{{ $product->color_fav }}" v-model="favColor">
     <div class="col-md-8 col-sd-12 d-flex">
         <div class="col-1  m-0 p-0">
             <a href="/products">
@@ -151,25 +153,25 @@ img{
             </a>
         </div>
         <div class="col-11 m-0 p-0">       
-            <img :src="'{{$product->image_link . '-'}}' + color + '.png'" width="650px" :alt="color">
+            <img class="img-tshirt" :src="'{{$product->image_link . '-'}}' + color + '.png'" width="650px" :alt="color">
         </div>
     </div>
     <div class="col-md-4 col-sd-12">
         <div class="name-container">
             <p class="name">{{ $product->name }} T-SHIRT</p>
         </div>
-        <form action="/checkout/{{$product->id}}" method="post">
+        <form action="{{route('cart.store')}}" method="post">
             <div class="row">
-                <div class="col-12 pb-2">€{{$product->price }}0</div>
+                <div class="col-12 pb-2">{{ $product->presentPrice() }}</div>
             </div>
             <div class="row">
                 <div class="col-12 pb-2">
                     <p>Color</p>
-                    <input type="hidden" value="{{ $product->color_fav }}" v-model="favColor">
+                    
                     <div class="color-selector"> 
                         @foreach($product->colors as $color)
                             <label for="radio-{{$color->color}}" class="radio-{{$color->color}}"><div></div></label>
-                            <input type="radio" name="color" value="{{$color->color}}" id="radio-{{$color->color}}" selected v-model="color" >
+                            <input type="radio" name="color" value="{{$color->color}}" id="radio-{{$color->color}}" v-model="color" >
                         @endforeach
                     </div>
                 </div>
@@ -188,9 +190,10 @@ img{
             </div>
             <div class="row">   
                 <div class="col-12">
-                    <input type="submit" class="btn btn-dark btn-block btn-submit" value="CHECKOUT">
+                    <input type="submit" class="btn btn-dark btn-block btn-submit" value="ADD TO CART">
                 </div>
             </div>
+            <input type="hidden" value="{{$product->id}}" name="product_id">
             @csrf
         </form>
     </div>

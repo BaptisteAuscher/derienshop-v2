@@ -2,23 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Cart;
 use App\Command;
 use App\Product;
 use Illuminate\Http\Request;
 
 class CommandsController extends Controller
 {
-    public function __invoke(Product $product){
+    public function store(){
+        if (! session()->has('shipping-cost')) {
+            return redirect()->route('cart')->with('message', 'You must select a country');
+        }
+
+        if (Cart::count() < 2){
+            return redirect()->route('products.index')->with('message', 'Add item to cart before proceeding to checkout !');
+        }
         request()->validate([
-            'size'=>'required|in:SMALL,MEDIUM,LARGE',
-            'color'=>'required|in:black,white,blue,purple',
             'clientName'=>'required',
             'email'=>'required|email',
-            'adress'=>'required',
-            'city'=>'required',
-            'zip'=>'required',
+            'line1'=>'required',
             'stripeToken'=>'required',
         ]);
+
+        if (request()->filled('line2')) {
+            $linedeux = request('line2');
+        } 
+        else {
+            $linedeux = '';
+        }
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
@@ -26,30 +37,44 @@ class CommandsController extends Controller
         $customer = $stripe->customers->create([
             'name' => request('clientName'),
             'email' => request('email'),
-            'description' => 'My First Test Customer (created for API docs)',
+            'description' => 'Client Description',
             'source' => request('stripeToken'),
         ]);
 
         $stripe->charges->create([
             'customer' => $customer->id,
             'currency' => 'eur',
-            'amount' => $product->price*100,
-        ]);
-
-        $command = Command::create([
-            'stripe_id' => $customer->id,
-            'product_name' => $product->name,
-            'product_color' => request('color'),
-            'product_size' => request('size'),
-            'customer_name' => request('clientName'),
-            'customer_email' => request('email'),
-            'customer_adress' => request('adress'),
-            'customer_city' => request('city'),
-            'customer_zip' => request('zip'),
-            'amount' => $product->price,
-            
+            'amount' => (int)Cart::total(),
         ]);
         
-        return redirect('/checkout/confirmation')->with('message', $command);
+        foreach (Cart::content() as $item) {
+            if ($item->id != 999) {
+                $command = Command::create([
+                    'product_name' => $item->model->name,
+                    'product_color' => $item->options->color,
+                    'product_size' => $item->options->size,
+                    'customer_name' => request('clientName'),
+                    'customer_email' => request('email'),
+                    'customer_adress' => request('line1') . ' ' . $linedeux,
+                    'customer_country' => session('shipping-cost')->options->country,
+                    'amount' => $item->model->presentPrice(),
+                    'cart_id' => $item->rowId, 
+                ]);
+            }
+        }
+        $cart = Cart::content();
+        $price = presentPrice(Cart::total());
+        Cart::destroy();
+        
+        session()->forget('shipping-cost');
+
+        \Session::flash('message','Payment Complete !');
+
+        return view('/confirmation', [
+            'cart'=>$cart,
+            'price'=>$price,
+            'name'=>request('clientName'),
+            'adress'=>request('line1') . ' ' . $linedeux,
+        ]);
     }
 }

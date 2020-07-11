@@ -18,12 +18,12 @@ class CreateCommandsTable extends Migration
             $table->string('product_name');
             $table->string('product_size');
             $table->string('product_color');
-            $table->float('amount');
+            $table->string('amount');
             $table->string('customer_name');
+            $table->string('customer_email');
             $table->string('customer_adress');
-            $table->string('customer_zip');
-            $table->string('customer_city');
-            $table->string('stripe_id');
+            $table->string('customer_country');
+            $table->string('cart_id');
             $table->timestamps();
         });
     }

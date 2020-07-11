@@ -62,6 +62,7 @@ Nous nous réservons le droit de modifier la présente politique de confidential
 Si notre boutique fait l’objet d’une acquisition par ou d’une fusion avec une autre entreprise, vos renseignements pourraient être transférés aux nouveaux propriétaires pour que nous puissions continuer à vous vendre des produits.
 
 <br><a href="https://icons8.com/icon/3095/menu" style="font-size: .8em;">Menu icon by Icons8</a>
+<br><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 </div>
 

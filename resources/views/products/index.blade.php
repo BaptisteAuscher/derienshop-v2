@@ -30,6 +30,13 @@ a:hover{
   width: 400px;
 }
 
+.message-alert{
+  font-size: 1.2em;
+  font-weight: 800;
+  color: #919191;
+  font-style: italic;
+}
+
 @media screen and (max-device-width: 479px){
   .item-container{
     flex-wrap: wrap;
@@ -48,7 +55,7 @@ a:hover{
 
 
 @if(session()->has('message'))
-<div class="alert alert-success" role="alert">
+<div class="message-alert" role="alert">
   {{session()->get('message')}}
 </div>
 @endif

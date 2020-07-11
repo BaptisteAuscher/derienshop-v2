@@ -30,7 +30,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
     data: {
-        favColor: "black",
+        favColor : 'black',
+        country: 'France',
     },
     computed: {
         color: {

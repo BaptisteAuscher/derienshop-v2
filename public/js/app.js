@@ -49704,7 +49704,8 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app',
   data: {
-    favColor: "black"
+    favColor: 'black',
+    country: 'France'
   },
   computed: {
     color: {

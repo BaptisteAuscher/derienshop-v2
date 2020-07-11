@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'home');
+Route::view('/', 'home')->name('home');
 
-Route::get('/products', 'ProductsController@index');
+Route::get('/products', 'ProductsController@index')->name('products.index');
 Route::get('/products/{product}', 'ProductsController@show');
 
-Route::post('/checkout/{product}', 'CheckoutController');
+Route::get('/checkout', 'CheckoutController')->name('checkout');
 
-Route::post('/charge/{product}', 'CommandsController');
+Route::post('/charge', 'CommandsController@store')->name('charge');
 
 Route::view('/terms', 'terms.terms');
 
@@ -32,6 +32,27 @@ Route::view('/privacy-policy', 'terms.privacy');
 
 Route::view('/range', 'range.index');
 
-Route::view('/checkout/confirmation', 'confirmation');
+Route::view('/confirmation', 'confirmation');
 
 Route::view('/contact', 'contact');
+
+
+Route::view('/cart', 'cart')->name('cart');
+
+Route::post('/cart', 'CartController@store')->name('cart.store');
+Route::delete('/cart/{id}', 'CartController@destroy')->name('cart.destroy');
+
+Route::post('/shipping-costs', 'ShippingCostsController@store')->name('shipping-costs.store');
+Route::delete('/shipping-costs/{id}', 'ShippingCostsController@delete')->name('shipping-costs.delete');
+
+
+Route::get('/delete-cart', function() {
+    Cart::destroy();
+    if (session()->has('shipping-cost')) {
+        session()->forget('shipping-cost');
+    }
+});
+
+Route::get('/show-cart', function() {
+    dd(Cart::content());
+});

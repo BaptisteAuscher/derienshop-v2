@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,800;1,800&display=swap" rel="stylesheet">
     <title>derien</title>
     <style>
         body{
-            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             padding: 0;
             margin: 0;
             width: 100vw;
@@ -93,35 +94,37 @@
     </style>
 </head>
 <body>
-    @if(session()->has('message'))
 
+    @if(session()->has('message'))
 
         <div class="top">
             <a href="/"><img src="https://images.derienshop.com/derien-logo-couleur.png" alt="" width="300px"></a>
         </div>
 
         <div class="message">       
-            <p>Thanks for your purchase, {{session()->get('message')->customer_name}} !</p>
+            <p>Thanks for your purchase, {{$name}} !</p>
         </div>
 
         <div class="content">
             <div class="order">
                 <p class="delivery-title">Order :</p>
-                <p class="adress">{{session()->get('message')->product_name}}</p>
-                <p class="adress">{{session()->get('message')->product_color}}</p>
-                <p class="adress">{{session()->get('message')->product_size}}</p>
+                @foreach($cart as $item)
+                    @if($item->id != 999)
+                        <p class="adress">{{$item->model->name}}</p>
+                        <p class="adress">Color : {{$item->options->color}}</p>
+                        <p class="adress">Size : {{$item->options->size}}</p><br><br>
+                    @endif
+                @endforeach
             </div>
             <hr>
             <div class="delivery">
                 <p class="delivery-title">Delivery :</p>
-                <p class="adress">{{session()->get('message')->customer_adress}}</p>
-                <p class="adress">{{session()->get('message')->customer_zip}}</p>
-                <p class="adress">{{session()->get('message')->customer_city}}</p>
+                <p class="adress">{{$adress}}</p>
             </div>
             <hr>
             <div class="total">
                 <p>Total :</p>
-                <p>{{session()->get('message')->amount}}0€</p>
+                <p>{{$price}}</p>
             </div>
             
         </div>
@@ -134,10 +137,10 @@
             <p>Contact : contact@derienshop.com</p>
         </div>
         <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
-    @else
 
-    <script>window.location = "/";</script>
+    @elseif( ! session()->has('message'))
 
+        <script>window.location = '/';</script>
     @endif
 </body>
 </html>
