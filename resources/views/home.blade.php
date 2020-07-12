@@ -155,6 +155,7 @@
             .logo-container > img {
                 margin: 0;
                 width: 200px;
+                height: 112.5px;
             }
             .content{
                 margin-top: 50vw;
