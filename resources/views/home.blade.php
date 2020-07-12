@@ -50,6 +50,7 @@
 
         .logo-container > img {
             width: 300px;
+            height: 169.75px;
             margin-top: 50px;
         }
         .content{
