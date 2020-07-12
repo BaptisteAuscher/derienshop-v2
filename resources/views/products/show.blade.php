@@ -24,11 +24,18 @@ input[type='radio']{
 
 .size-select{
     width: 100%;
+    border-radius: 0;
+    border: 1px solid #919191;
     padding: 10px;
+    margin-bottom: 5px;
+    background-color: white;
     border: 2px solid black;
-    background: #fff;
+    color: #555555;
     font-weight: 800;
-    
+    text-transform: uppercase;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
 }
 
 .size-select:visited{
