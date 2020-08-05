@@ -18,9 +18,13 @@ Route::view('/', 'home')->name('home');
 Route::get('/products', 'ProductsController@index')->name('products.index');
 Route::get('/products/{product}', 'ProductsController@show');
 
-Route::get('/checkout', 'CheckoutController')->name('checkout');
+Route::get('/checkout-with-stripe', 'StripeController@index')->name('checkout.stripe');
 
-Route::post('/charge', 'CommandsController@store')->name('charge');
+Route::post('/checkout-with-paypal', 'PaypalController@create')->name('checkout.paypal');
+Route::get('/execute-paypal-payment', 'PaypalController@execute');
+
+
+Route::post('/charge-with-stripe', 'StripeController@charge')->name('charge.stripe');
 
 Route::view('/terms', 'terms.terms');
 

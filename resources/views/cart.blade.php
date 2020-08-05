@@ -292,10 +292,12 @@ button{
 
 
             <p>Check again your cart before checkout</p>
-            <a class="btn-black" href="{{ route('checkout') }}">CHECKOUT</a>
-            <!--<form action="#">
+            <a class="btn-black" href="{{ route('checkout.stripe') }}">CHECKOUT</a>
+            
+            <form action="{{ route('checkout.paypal') }}" method="POST">
+                @csrf
                 <input class="btn-blue" type="submit" value="CHECKOUT WITH PAYPAL">
-            </form>-->
+            </form>
         </div>
     </div>
 </div>
